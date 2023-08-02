@@ -121,7 +121,7 @@ img {
     cursor: pointer; /* Change cursor to pointer on hover */
 }
 
-@media screen and (max-width: 20000px) {
+@media screen and (max-width: 800px) {
     .sidebar {
         display: none;
     }
@@ -133,17 +133,22 @@ img {
         padding: 10px;
         
     }
+
     .topbar {
-        
+        /* ... other styles ... */
+        display: flex;
+        flex-direction: column; /* This ensures the content stacks vertically */
+        align-items: start; /* Aligns the content to the start (left side for LTR languages) */
+        justify-content: flex-start; /* Aligns the content to the start (top side) */
         position: flex; /* Fix the position */
         width: 100%;
-        height: 25px;
+        height: auto;
         background-color: white; /* Set background color to dark gray */
-        padding: 20px; /* Add padding */
+        padding: 10px; /* Add padding */
         z-index: 40; /* Set z-index to ensure it's above other elements */
         pointer-events: auto;
-        
     }
+    
 
 
     .header-text-topbar {
@@ -163,7 +168,8 @@ img {
         margin-top: 25px;
         list-style: none; /* Remove bullet points */
         padding: 0;
-        
+        gap: 10px;
+        flex-wrap: wrap;
     }
 
     .project-item-topbar {
@@ -174,6 +180,7 @@ img {
         margin-right: 5px;
         z-index: 30;
         list-style: none; /* Remove bullet points */
+        max-width: calc(100% / 3); /* For example, a maximum of one-third of the container width */
        
     }
 
@@ -183,7 +190,7 @@ img {
     
 }
 
-@media screen and (min-width: 200000px) {
+@media screen and (min-width: 801px) {
     .topbar {
         display: none;
     }
