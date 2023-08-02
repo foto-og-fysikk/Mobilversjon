@@ -146,13 +146,7 @@ const høst = [
     ['høst/PA300161.jpg','Eika','24/06-23']
 ];
 
-const Portugal = [
 
-
-
-
-
-];
 
 const portretter = [
    

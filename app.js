@@ -18,81 +18,87 @@ modal.addEventListener('click', () => {
 
 // Function to generate a masonry grid layout for posts. Takes the number of columns and the posts data as input
 function generateMasonryGrid(columns, posts) {
-    // Clears the container's HTML
-    container.innerHTML = '';
+  // Clears the container's HTML
+  container.innerHTML = '';
+  
+  // Initializes an object to store columns
+  let columnWrappers = {};
 
-    // Initializes an object to store columns
-    let columnWrappers = {};
-
-    // Creates arrays within the columnWrappers object for each column
-    for (let i = 0; i < columns; i++) {
+  // Creates arrays within the columnWrappers object for each column
+  for (let i = 0; i < columns; i++) {
       columnWrappers[`column${i}`] = [];
-    }
+  }
 
-    // Populates the columnWrappers with posts data, distributing posts across columns
-    for (let i = 0; i < posts.length; i++) {
+  // Populates the columnWrappers with posts data, distributing posts across columns
+  for (let i = 0; i < posts.length; i++) {
       const column = i % columns;
       columnWrappers[`column${column}`].push(posts[i]);
-    }
+  }
 
-    // Creates the HTML structure for each column and post
-    for(let i = 0; i < columns; i++){
-        // Gets the posts for this column
-        let columnPosts = columnWrappers[`column${i}`];
+  // Creates the HTML structure for each column and post
+  for(let i = 0; i < columns; i++) {
+      // Gets the posts for this column
+      let columnPosts = columnWrappers[`column${i}`];
 
-        // Creates a new div for this column
-        let div = document.createElement('div');
+      // Creates a new div for this column
+      let div = document.createElement('div');
 
-        // Adds the 'column' class to the column div
-        div.classList.add('column');
+      // Adds the 'column' class to the column div
+      div.classList.add('column');
 
-        // For each post in this column
-        columnPosts.forEach(post => {
-            // Create the post div, image, and overlay
-            let postDiv = document.createElement('div');
-            postDiv.classList.add('post');
-            let image = document.createElement('img');
-            image.src = post.image;
-            let overlay = document.createElement('div');
-            overlay.classList.add('overlay');
+      // For each post in this column
+      columnPosts.forEach(post => {
+          // Create the post div, image, and overlay
+          let postDiv = document.createElement('div');
+          postDiv.classList.add('post');
+          
+          let image = document.createElement('img');
+          image.src = post.image;
+          image.classList.add('masonry-image'); // This ensures the photo in the masonry grid has the class masonry-image
+          
+          let overlay = document.createElement('div');
+          overlay.classList.add('overlay');
 
-            // Create the post title
-            let title = document.createElement('h3');
-            title.innerText = post.title;
-            overlay.appendChild(title);
+          // Create the post title
+          let title = document.createElement('h3');
+          title.innerText = post.title;
+          overlay.appendChild(title);
 
-            // Append the image and overlay to the post div
-            postDiv.append(image, overlay);
+          // Append the image and overlay to the post div
+          postDiv.append(image, overlay);
+          
+          // Append the post div to the column div
+          div.appendChild(postDiv);
 
-            // Append the post div to the column div
-            div.appendChild(postDiv)
+          // Event listener for clicking on a post
+          postDiv.addEventListener('click', (event) => {
+              // Prevents the click event from reaching the modal
+              event.stopPropagation(); 
 
-            // Event listener for clicking on a post
-            postDiv.addEventListener('click', (event) => {
-                // Prevents the click event from reaching the modal
-                event.stopPropagation(); 
+              // Create and append new image, title, and subtitle to the modal
+              let modalImg = document.createElement('img');
+              modalImg.src = post.image;
+              let modalTitle = document.createElement('h3');
+              modalTitle.innerText = post.title;
+              let modalSubtitle = document.createElement('h4');
+              modalSubtitle.innerText = post.subtitle;
 
-                // Create and append new image, title, and subtitle to the modal
-                let modalImg = document.createElement('img');
-                modalImg.src = post.image;
-                let modalTitle = document.createElement('h3');
-                modalTitle.innerText = post.title;
-                let modalSubtitle = document.createElement('h4');
-                modalSubtitle.innerText = post.subtitle;
+              // Clear modal content and append new content
+              modal.innerHTML = ''; 
+              modal.append(modalImg, modalTitle, modalSubtitle);
 
-                // Clear modal content and append new content
-                modal.innerHTML = ''; 
-                modal.append(modalImg, modalTitle, modalSubtitle);
+              // Show the modal
+              modal.style.display = 'flex'; 
+          });
+      });
 
-                // Show the modal
-                modal.style.display = 'flex'; 
-            });
-        });
-
-        // Append the column div to the container div
-        container.appendChild(div);
-    }
+      // Append the column div to the container div
+      container.appendChild(div);
+  }
 }
+
+
+
 
 // Stores the width of the window when the script runs
 let previousScreenSize = window.innerWidth;
@@ -129,73 +135,68 @@ if (previousScreenSize < 600) {
 }
 
 // Selects all project items from the document
-const projectItems = document.querySelectorAll('.project-item');
+const projectItems = document.querySelectorAll('.project-item-topbar, .project-item-sidebar');
 
 
 
 // Adds a click event listener to each project item
 projectItems.forEach(function (item) {
   item.addEventListener('click', function () {
-    const itemId = item.getAttribute('id');
-    let projectData;
+      const itemId = item.getAttribute('id');
+      let projectData;
 
-    // Selects the appropriate project data based on the id of the clicked project item
-    if (itemId === 'Portugal') {
-      projectData = Portugal;
-    } else if (itemId === 'portretter') {
-      projectData = portretter;
-    } else if (itemId === 'Ravnedalen') {
-      projectData = Ravnedalen;
-    } else if (itemId === 'Kjellandsheia'){
-      projectData = Kjellandsheia;
-    }
-    
-    // Creates posts from the selected project data
-    let projectPosts = createPostsFromData(projectData);
+      // Selects the appropriate project data based on the id of the clicked project item
+      switch (itemId) {
+          case 'Portugal': projectData = Portugal; break;
+          case 'portretter': projectData = portretter; break;
+          case 'Ravnedalen': projectData = Ravnedalen; break;
+          case 'Kjellandsheia': projectData = Kjellandsheia; break;
+          default: return; // Exit if none of the above
+      }
 
-    // Generates a new masonry grid with the created posts, based on the current window size
-    if (previousScreenSize < 600) {
-      generateMasonryGrid(1, projectPosts);
-    } else if (previousScreenSize >= 600 && previousScreenSize < 1000) {
-      generateMasonryGrid(2, projectPosts);
-    } else {
-      generateMasonryGrid(2, projectPosts);
-    }
+      // Creates posts from the selected project data
+      let projectPosts = createPostsFromData(projectData);
 
+      // Generates a new masonry grid with 2 columns, based on the current window size
+      if (previousScreenSize < 600) {
+          generateMasonryGrid(1, projectPosts);
+      } else {
+          generateMasonryGrid(2, projectPosts);
+      }
   });
 });
+
 
 // Adds a click event listener to each project item
 projectItems.forEach(function (item) {
   item.addEventListener('click', function () {
-    const itemId = item.getAttribute('id');
-    let projectData;
+      const itemId = item.getAttribute('id');
+      let projectData;
 
-    // Selects the appropriate project data based on the id of the clicked project item
-    if (itemId === 'sommer') {
-      projectData = sommer;
-    } else if (itemId === 'vinter') {
-      projectData = vinter;
-    } else if (itemId === 'vår') {
-      projectData = vår;
-    } else if (itemId === 'høst') {
-      projectData = høst;
-    } 
+      // Selects the appropriate project data based on the id of the clicked project item
+      switch (itemId) {
+          case 'sommer': projectData = sommer; break;
+          case 'vinter': projectData = vinter; break;
+          case 'vår': projectData = vår; break;
+          case 'høst': projectData = høst; break;
+          default: return; // Exit if none of the above
+      }
 
-    // Creates posts from the selected project data
-    let projectPosts = createPostsFromData(projectData);
+      // Creates posts from the selected project data
+      let projectPosts = createPostsFromData(projectData);
 
-    // Generates a new masonry grid with the created posts, based on the current window size
-    if (previousScreenSize < 600) {
-      generateMasonryGrid(1, projectPosts);
-    } else if (previousScreenSize >= 600 && previousScreenSize < 1000) {
-      generateMasonryGrid(3, projectPosts);
-    } else {
-      generateMasonryGrid(3, projectPosts);
-    }
-
+      // Generates a new masonry grid with 3 columns, based on the current window size
+      if (previousScreenSize < 600) {
+          generateMasonryGrid(1, projectPosts);
+      } else {
+          generateMasonryGrid(3, projectPosts);
+      }
   });
 });
+
+
+
+
 // Function to create post objects from the project data
 function createPostsFromData(data) {
   let posts = []; // Array to store the created posts
@@ -232,15 +233,16 @@ function createPostsFromData(data) {
 }
 
 
-function generateMasonryGridOnClick() {
-  const columns = 3; // Number of columns for the grid
-  const projectPosts = createPostsFromData(homepage); // Get the posts data
-// Generate the Masonry grid with the specified number of columns and the project posts
-  generateMasonryGrid(columns, projectPosts);
-}
+const fotoboksenElements = document.querySelectorAll('.header-text-sidebar h2, .header-text-topbar h2');
+fotoboksenElements.forEach(element => {
+    element.addEventListener('click', function() {
+        location.reload();
+    });
+});
 
-// Selects the header element from the document
-const header = document.querySelector('.header');
 
-// Adds a click event listener to the header element
-header.addEventListener('click', generateMasonryGridOnClick);
+
+
+
+
+

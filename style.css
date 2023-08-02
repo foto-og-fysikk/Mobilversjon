@@ -3,80 +3,75 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: #ffffff;
+    color: white;
     font-family: 'Inter', sans-serif;
 }
+
 
 /* Set background color and overflow behavior for html and body */
 html,
 body {
     overflow: hidden; /* Hide overflow content */
-    background-color: rgb(0, 0, 0); /* Set background color to black */
+    background-color:white; /* Set background color to black */
+    
+    
 }
 
 /* Styling for the main content area */
 main {
-    padding-top: 100px; /* Add space for the header on large screens */
+    position: fixed; /* Fix the position */
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     overflow: scroll; /* Allow scrolling if content exceeds viewport height */
     background-color: white; /* Set background color to white */
 }
 
-/* Styling for the header on large screens */
-@media only screen and (min-width: 768px) {
-    .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100px;
-        display: flex;
-        align-items: center;
-        padding: 2vw;
-        z-index: 10;
-        mix-blend-mode: difference;
-    }
-}
-
-/* Styling for the top bar on phones and smaller tablets (max-width: 767px) */
-@media only screen and (max-width: 767px) {
-    .top-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background-color: #333;
-        color: #fff;
-        z-index: 10;
-    }
-}
-
 /* Styling for the container */
 .container {
-    position: relative;
+    position: relative; /* Set relative position */
     width: 100%;
-    display: flex;
-    gap: 10px;
-    padding: 10px 10px;
-    background: white;
+    display: flex; /* Use flexbox for layout */
+    gap: 10px; /* Set gap between flex items */
+    background: white; /* Set background color to white */
+    
 }
 
 /* Styling for columns */
 .column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex: 1; /* Distribute available space equally among columns */
+    display: flex; /* Use flexbox for column layout */
+    flex-direction: column; /* Stack items vertically */
+    gap: 5px; /* Set gap between column items */
+}
+
+/* Styling for overlay */
+.overlay {
+    opacity: 0;
+    position: absolute; /* Set absolute position */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Set background color */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    opacity: 0; /* Set initial opacity to 0 */
+    transition: opacity 0.3s;  /* Smooth transition for hover effect*/
+    z-index: 1000;
+}
+
+/* Styling for overlay on hover */
+.post:hover .overlay {
+    opacity: 1; /* Set opacity to 0.5 on hover */
+    cursor: pointer; /* Change cursor to pointer on hover */
 }
 
 /* Styling for posts */
 .post {
-    position: relative;
+    position: relative; /* Set relative position */
     overflow: hidden;
     width: 100%;
 }
@@ -84,80 +79,9 @@ main {
 /* Styling for images */
 img {
     width: 100%;
-    filter: grayscale;
+    filter: grayscale; /* Apply grayscale filter to images */
 }
 
-/* Styling for overlay */
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #161616;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: 0.5s;
-}
-
-/* Styling for overlay on hover */
-.post:hover .overlay {
-    opacity: 0.5;
-    cursor: pointer;
-}
-
-/* Styling for the sidebar on large screens */
-@media only screen and (min-width: 768px) {
-    .sidebar {
-        display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 200px;
-        height: 50%;
-        background-color: white;
-        padding: 20px;
-        z-index: 30;
-        pointer-events: auto;
-    }
-}
-
-/* Styling for the project list */
-.project-list {
-    margin-top: 100px;
-    list-style: none;
-    padding: 0;
-}
-
-.project-item {
-    margin-bottom: 10px;
-    cursor: pointer;
-    color: black;
-    margin-top: 15px;
-    margin-left: 50px;
-    z-index: 30;
-}
-
-.project-space {
-    margin-bottom: 10px;
-    cursor: pointer;
-    color: white;
-    margin-top: 15px;
-    margin-left: 50px;
-    z-index: 30;
-}
-
-.project-item:hover {
-    text-decoration: line-through;
-}
-
-.content {
-    margin-left: 200px;
-    height: 100%;
-    padding: 20px;
-}
 
 .modal {
     position: fixed;
@@ -165,11 +89,11 @@ img {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.859);
-    display: none;
+    display: none; /* Initially hidden */
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 20;
+    z-index: 20; /* Ensure the modal is on top of everything else */
 }
 
 .modal img {
@@ -192,3 +116,132 @@ img {
     left: 20px;
     font-size: 10px;
 }
+
+.header-text-sidebar h2:hover {
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+@media screen and (max-width: 20000px) {
+    .sidebar {
+        display: none;
+    }
+
+    .content {
+        margin-left: 0;  /* Adjust this value to match the sidebar width */
+        margin-top: 25px;
+        height: 100%;
+        padding: 10px;
+        
+    }
+    .topbar {
+        
+        position: flex; /* Fix the position */
+        width: 100%;
+        height: 25px;
+        background-color: white; /* Set background color to dark gray */
+        padding: 20px; /* Add padding */
+        z-index: 40; /* Set z-index to ensure it's above other elements */
+        pointer-events: auto;
+        
+    }
+
+
+    .header-text-topbar {
+        
+        position: fixed; /* Fix the position */
+        top: 0;
+        align-items: center;
+        padding-top: 5px; /* Add padding using viewport width unit */
+        padding-left: 5px;
+        z-index: 10; /* Set z-index to ensure it's above other elements */
+        mix-blend-mode: difference; /* Apply blend mode */
+    }
+
+    /* Styling for the project list */
+    .project-list-topbar {
+        display: flex;
+        margin-top: 25px;
+        list-style: none; /* Remove bullet points */
+        padding: 0;
+        
+    }
+
+    .project-item-topbar {
+        display:inline;
+        cursor: pointer;
+        color: black;
+        margin-left: 5px;
+        margin-right: 5px;
+        z-index: 30;
+        list-style: none; /* Remove bullet points */
+       
+    }
+
+    .project-item-topbar:hover {
+        text-decoration: line-through;
+    }
+    
+}
+
+@media screen and (min-width: 200000px) {
+    .topbar {
+        display: none;
+    }
+    .content {
+        margin-left: 200px;  /* Adjust this value to match the sidebar width */
+        height: 100%;
+        padding: 20px;
+        
+    }
+    
+    .sidebar {
+        position: fixed; /* Fix the position */
+        width: 200px;
+        height: 50%;
+        background-color: white; /* Set background color to dark gray */
+        /*overflow: auto;  Enable scrolling if content exceeds sidebar height */
+        padding: 20px; /* Add padding */
+        z-index: 30; /* Set z-index to ensure it's above other elements */
+        pointer-events: auto;
+    }
+        /* Styling for the header */
+    .header-text-sidebar {
+        position: fixed; /* Fix the position */
+        top: 0;
+        width: 100%;
+        align-items: center;
+        padding: 2vw; /* Add padding using viewport width unit */
+        z-index: 10; /* Set z-index to ensure it's above other elements */
+        mix-blend-mode: difference; /* Apply blend mode */
+    }
+
+    /* Styling for the project list */
+    .project-list-sidebar {
+        margin-top: 100px;
+        list-style: none; /* Remove bullet points */
+        padding: 0;
+    }
+
+    .project-item-sidebar {
+        margin-bottom: 10px;
+        cursor: pointer;
+        color: black;
+        margin-top: 15px;
+        margin-left: 2vw;
+        z-index: 30;
+        list-style: none; /* Remove bullet points */
+    }
+
+    .project-space-sidebar {
+        margin-bottom: 10px;
+        cursor: pointer;
+        color: white;
+        margin-top: 10px;
+        margin-left: 50px;
+        z-index: 30;
+    }
+    .project-item-sidebar:hover {
+        text-decoration: line-through;
+    }
+}
+
