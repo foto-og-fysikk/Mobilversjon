@@ -128,7 +128,7 @@ img {
 
     .content {
         margin-left: 0;  /* Adjust this value to match the sidebar width */
-        margin-top: 25px;
+        margin-top: 0px;
         height: 100%;
         padding: 10px;
         
@@ -144,7 +144,7 @@ img {
         width: 100%;
         height: auto;
         background-color: white; /* Set background color to dark gray */
-        padding: 10px; /* Add padding */
+        padding-top: 15px; /* Add padding */
         z-index: 40; /* Set z-index to ensure it's above other elements */
         pointer-events: auto;
     }
@@ -152,7 +152,6 @@ img {
 
 
     .header-text-topbar {
-        
         position: fixed; /* Fix the position */
         top: 0;
         align-items: center;
@@ -177,6 +176,7 @@ img {
         cursor: pointer;
         color: black;
         margin-left: 5px;
+        margin-top: 2px;
         margin-right: 5px;
         z-index: 30;
         list-style: none; /* Remove bullet points */
